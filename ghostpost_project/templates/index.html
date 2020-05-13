@@ -1,1 +1,20 @@
-homepage
+<h2>Homepage</h2>
+<h5><a href="{% url 'addpost' %}">Create a Roast or Boast</a></h5>
+<form action='.' method='GET'>
+    <select name='category'>
+        <option selected>Choose Category....</option>
+        <option value='both'>ROASTS & BOASTS</option>
+        <option value='roasts'>ROASTS</option>
+        <option value='boasts'>BOASTS</option>
+    </select>
+    <h5>Filter by:</h5>
+    <label>Votes</label>
+    <input type="checkbox" name='votes'>
+    <br>
+    <button type='submit'>Apply Filter</button>
+</form>
+<br>
+<hr>
+{% for post in posts %}
+    <a href="{% url 'post' post.id %}">{{post.text}}</a><br>
+{% endfor %}

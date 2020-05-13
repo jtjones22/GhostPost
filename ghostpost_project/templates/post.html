@@ -1,0 +1,13 @@
+<h3>{{ post }}</h3>
+<p>{{ post.submission_time }}</p>
+<hr>
+<body>{{ post.text }}</body>
+
+<h5>Upvote(s): {{ post.upvotes }} </h5>
+<h4><a href="{% url 'upvote' post.id %}">UPVOTE</a></h4>
+<h5>Downvote(s): {{ post.downvotes }} </h5>
+<h4><a href="{% url 'downvote' post.id %}">DOWNVOTE</a></h4>
+<br>
+<br>
+
+<a href="{% url 'homepage' %}">Home Page</a>
