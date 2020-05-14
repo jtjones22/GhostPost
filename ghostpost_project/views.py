@@ -4,12 +4,12 @@ from django.shortcuts import (
     HttpResponseRedirect
     )
 
-from .models import PostItem, Category
+from .models import PostItem
 from .forms import AddPost
 
 
 def is_valid_query(parameter):
-    return parameter != '' and parameter is not None
+    return True if parameter else False
 
 
 def index(request):
@@ -18,8 +18,6 @@ def index(request):
     # categories = Category.objects.all()
     votes = request.GET.get('votes')
     category = request.GET.get('category')
-    if is_valid_query(votes):
-        qs = qs.order_by('-upvotes')
     if is_valid_query(category) and category != 'Choose Category...':
         if category == 'roasts':
             qs = qs.filter(category_choice='roast')
@@ -27,8 +25,10 @@ def index(request):
             qs = qs.filter(category_choice='boast')
         else:
             pass
+    if is_valid_query(votes):
+        qs = sorted(qs, key=lambda post: post.vote_score, reverse=True)
     html = 'index.html'
-    context = {'posts': qs}
+    context = {'posts': qs, 'category': category, 'votes': votes}
     return render(request, html, context)
 
 

@@ -22,6 +22,10 @@ class PostItem(models.Model):
     def __str__(self):
         return self.category_choice
 
+    @property
+    def vote_score(self):
+        return self.upvotes - self.downvotes
 
-class Category(models.Model):
-    categories = models.ForeignKey(PostItem, on_delete=models.CASCADE)
+
+# class Category(models.Model):
+#     categories = models.ForeignKey(PostItem, on_delete=models.CASCADE)

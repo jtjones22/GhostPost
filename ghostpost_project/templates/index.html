@@ -1,20 +1,39 @@
 <h2>Homepage</h2>
 <h5><a href="{% url 'addpost' %}">Create a Roast or Boast</a></h5>
 <form action='.' method='GET'>
+    <h5>Filter by:</h5>
     <select name='category'>
-        <option selected>Choose Category....</option>
-        <option value='both'>ROASTS & BOASTS</option>
+        <option value='both' selected>ROASTS & BOASTS</option>
         <option value='roasts'>ROASTS</option>
         <option value='boasts'>BOASTS</option>
     </select>
-    <h5>Filter by:</h5>
+    <br>
+    <br>
     <label>Votes</label>
     <input type="checkbox" name='votes'>
     <br>
+    <br>
     <button type='submit'>Apply Filter</button>
 </form>
-<br>
+{% if votes %}
+<h2>Sorting by:</h2>
+<h3>Votes</h3>
+{% endif %}
+{% if category == 'boasts' %}
+    <h3>BOASTS</h3>
+
+    {% elif category == 'roasts' %}
+    <h3>ROASTS</h3>
+{% endif %}
+
 <hr>
 {% for post in posts %}
+
     <a href="{% url 'post' post.id %}">{{post.text}}</a><br>
+    <ul>
+        <li>
+            <h5>Upvotes: {{post.upvotes}} - Downvotes: {{post.downvotes}}</h5>
+        </li>
+    </ul>
+    <hr>
 {% endfor %}
