@@ -4,6 +4,9 @@ button:focus {
     border: black solid 1px;
 }
 
+button {
+    cursor: pointer;
+}
 
 
 .delete_button {
