@@ -18,6 +18,7 @@ class PostItem(models.Model):
         default=datetime.datetime.now,
         blank=True
         )
+    magic_key = models.CharField(max_length=10, editable=False)
 
     def __str__(self):
         return self.category_choice

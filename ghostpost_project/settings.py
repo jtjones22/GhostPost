@@ -28,6 +28,11 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
+STATICFILES_DIR = [
+    'ghostpost_project/static/css'
+]
+
+
 # Application definition
 
 INSTALLED_APPS = [

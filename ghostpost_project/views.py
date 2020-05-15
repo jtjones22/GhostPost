@@ -7,9 +7,17 @@ from django.shortcuts import (
 from .models import PostItem
 from .forms import AddPost
 
+import random
+import string
+
 
 def is_valid_query(parameter):
     return True if parameter else False
+
+
+def magic_key(stringLength=10):
+    magic_key = string.ascii_letters
+    return ''.join(random.choice(magic_key) for i in range(stringLength))
 
 
 def index(request):
@@ -59,17 +67,35 @@ def add_post(request):
         form = AddPost(request.POST)
         if form.is_valid():
             data = form.cleaned_data
+            magic_string = magic_key()
+            print(magic_string)
             PostItem.objects.create(
                 category_choice=data['category_choice'],
-                text=data['text']
+                text=data['text'],
+                magic_key=magic_string
             )
-            return HttpResponseRedirect(reverse('homepage'))
+            return HttpResponseRedirect('/post/owner/' + magic_string)
     form = AddPost()
 
     context = {'form': form}
     return render(request, html, context)
 
 
+def owner_post(request, magic_key):
+    item = PostItem.objects.get(magic_key=magic_key)
+    html = 'owner_post.html'
+    if request.method == "GET":
+        print('GET Request')
+        print(item)
+        print(item.magic_key)
+        context = {'post': item}
+        return render(request, html, context)
+
+
+def delete_post(request, magic_key):
+    post = PostItem.objects.get(magic_key=magic_key)
+    post.delete()
+    return HttpResponseRedirect(reverse('homepage'))
 
 """
 Originally had these linked on the index page to go to another page to sort the PostItems

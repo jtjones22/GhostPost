@@ -1,39 +1,49 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css'%}">
 <h2>Homepage</h2>
-<h5><a href="{% url 'addpost' %}">Create a Roast or Boast</a></h5>
-<form action='.' method='GET'>
-    <h5>Filter by:</h5>
-    <select name='category'>
-        <option value='both' selected>ROASTS & BOASTS</option>
-        <option value='roasts'>ROASTS</option>
-        <option value='boasts'>BOASTS</option>
-    </select>
-    <br>
-    <br>
-    <label>Votes</label>
-    <input type="checkbox" name='votes'>
-    <br>
-    <br>
-    <button type='submit'>Apply Filter</button>
-</form>
-{% if votes %}
-<h2>Sorting by:</h2>
-<h3>Votes</h3>
-{% endif %}
-{% if category == 'boasts' %}
-    <h3>BOASTS</h3>
+<a href="{% url 'addpost' %}"><button class="add_post">
+    Create a Roast or Boast
+</button></a>
+{% if posts %}
+    <form action='.' method='GET'>
+        <h5>Filter by:</h5>
+        <select name='category'>
+            <option value='both' selected>ROASTS & BOASTS</option>
+            <option value='roasts'>ROASTS</option>
+            <option value='boasts'>BOASTS</option>
+        </select>
+        <br>
+        <br>
+        <label>Votes</label>
+        <input type="checkbox" name='votes'>
+        <br>
+        <br>
+        <button type='submit'>Apply Filter</button>
+    </form>
+    {% if votes %}
+    <h2>Sorting by:</h2>
+    <h3>Votes</h3>
+    {% endif %}
+    {% if category == 'boasts' %}
+        <h3>BOASTS</h3>
 
-    {% elif category == 'roasts' %}
-    <h3>ROASTS</h3>
-{% endif %}
+        {% elif category == 'roasts' %}
+        <h3>ROASTS</h3>
+    {% endif %}
 
-<hr>
+    <hr>
 {% for post in posts %}
 
-    <a href="{% url 'post' post.id %}">{{post.text}}</a><br>
-    <ul>
-        <li>
-            <h5>Upvotes: {{post.upvotes}} - Downvotes: {{post.downvotes}}</h5>
-        </li>
-    </ul>
-    <hr>
-{% endfor %}
+        <a href="{% url 'post' post.id %}">{{post.text}}</a><br>
+        <ul>
+            <li>
+                <h5>Upvotes: {{post.upvotes}} - Downvotes: {{post.downvotes}}</h5>
+            </li>
+        </ul>
+        <hr>
+    {% endfor %}
+    {% else %}
+        <h3>There are no posts!</h3>
+        <h4>Click the "Create a Roast or Boast" button to be the first to post!</h4>
+
+{% endif %}
