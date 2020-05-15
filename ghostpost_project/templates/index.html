@@ -42,10 +42,7 @@
         </ul>
         <hr>
     {% endfor %}
-
-    <h3>There are no posts!</h3>
-    <h4>Click the "Create a Roast or Boast" button to be the first to post!</h4>
-{% else %}
+{% elif not posts %}
     {% if category == 'boasts' %}
         <h3>Boasts</h3>
     {% elif category == 'roasts' %}
